@@ -220,7 +220,7 @@ initSceneProperties(bpy.context.scene)
 class ToolsPanel(bpy.types.Panel):
 	bl_space_type = 'VIEW_3D'
 	bl_region_type = 'TOOLS'
-	#~ bl_category = "Tools"
+	bl_category = "Tools"
 	bl_context = "posemode"
 	bl_label = 'Rotation Mode'
 
