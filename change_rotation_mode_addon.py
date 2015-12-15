@@ -1,14 +1,42 @@
+'''
+Quat/Euler Rotation Mode Converter v0.1
+
+This script/addon:
+    - Changes (pose) bone rotation mode
+    - Converts keyframes from one rotation mode to another
+    - Creates fcurves/keyframes in target rotation mode
+    - Deletes previous fcurves/keyframes.
+    - Converts multiple bones
+    - Converts multiple Actions
+
+TO-DO:
+    - To convert object's rotation mode (alrady done in Mutant Bob script,
+		but not done in this one.
+    - To understand "EnumProperty" and write it well.
+    - Code clean
+    - ...
+    
+GitHub: https://github.com/MarioMey/rotation_mode_addon/
+BlenderArtist thread: 
+
+Mutant Bob did the "hard code" of this script. Thanks him!
+blender.stackexchange.com/questions/40711/how-to-convert-quaternions-keyframes-to-euler-ones-in-several-actions
+
+
+'''
+
+
 bl_info = {
-	"name": "Quat/Euler Rotation Mode Conversion",
+	"name": "Quat/Euler Rotation Mode Converter",
 	"author": "Mario Mey / Mutant Bob",
-	"version": (1, 0),
+	"version": (0, 1),
 	"blender": (2, 76, 0),
 	'location': '',
-	"description": "Converts Rotation Modes",
+	"description": "Converts bones rotation mode",
 	"warning": "",
 	"wiki_url": "",
-	"tracker_url": "",
-	"category": "3D View"}
+	"tracker_url": "https://github.com/MarioMey/rotation_mode_addon/",
+	"category": "Animation"}
 
 
 import bpy
@@ -206,7 +234,8 @@ def initSceneProperties(scn):
 	('YZX', 'YZX', 'YZX' ), 
 	('ZXY', 'ZXY', 'ZXY' ), 
 	('ZYX', 'ZYX', 'ZYX' ) ], 
-	name = "Order")
+	name = "Order",
+	description = "The targe rotation mode")
 	
 	scn['order_list'] = 0
  
@@ -222,7 +251,7 @@ class ToolsPanel(bpy.types.Panel):
 	bl_region_type = 'TOOLS'
 	bl_category = "Tools"
 	bl_context = "posemode"
-	bl_label = 'Rotation Mode'
+	bl_label = 'Quat/Euler Converter'
 
 	# draw the gui
 	def draw(self, context):
@@ -253,7 +282,7 @@ class ToolsPanel(bpy.types.Panel):
 class CONVERT_OT_current_action_selected_bones(bpy.types.Operator):
 	bl_label = 'Selected Bones'
 	bl_idname = 'current.selected'
-	#~ bl_description = 'Muestra escenario'
+	bl_description = 'Converts selected bones in current Action'
 	bl_options = {'REGISTER', 'UNDO'}
 	
 	# on mouse up:
@@ -274,6 +303,7 @@ class CONVERT_OT_current_action_selected_bones(bpy.types.Operator):
 class CONVERT_OT_current_action_every_bones(bpy.types.Operator):
 	bl_label = 'All Bones'
 	bl_idname = 'current.every'
+	bl_description = 'Converts every bone in current Action'
 	bl_options = {'REGISTER', 'UNDO'}
 	
 	# on mouse up:
@@ -294,6 +324,7 @@ class CONVERT_OT_current_action_every_bones(bpy.types.Operator):
 class CONVERT_OT_all_actions_selected_bones(bpy.types.Operator):
 	bl_label = 'Selected Bone'
 	bl_idname = 'all.selected'
+	bl_description = 'Converts selected bones in every Action'
 	bl_options = {'REGISTER', 'UNDO'}
 	
 	# on mouse up:
@@ -313,6 +344,7 @@ class CONVERT_OT_all_actions_selected_bones(bpy.types.Operator):
 class CONVERT_OT_all_action_every_bones(bpy.types.Operator):
 	bl_label = 'All Bone'
 	bl_idname = 'all.every'
+	bl_description = 'Converts every bone in every Action'
 	bl_options = {'REGISTER', 'UNDO'}
 	
 	# on mouse up:
