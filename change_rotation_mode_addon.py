@@ -17,7 +17,7 @@ TO-DO:
     - ...
     
 GitHub: https://github.com/MarioMey/rotation_mode_addon/
-BlenderArtist thread: 
+BlenderArtist thread: http://blenderartists.org/forum/showthread.php?388197-Quat-Euler-Rotation-Mode-Converter
 
 Mutant Bob did the "hard code" of this script. Thanks him!
 blender.stackexchange.com/questions/40711/how-to-convert-quaternions-keyframes-to-euler-ones-in-several-actions
