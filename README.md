@@ -1,4 +1,4 @@
-Quat/Euler Rotation Mode Converter v0.1
+Quat/Euler Rotation Mode Converter v0.2
 =======================================
 
 This script/addon:
@@ -25,4 +25,8 @@ TO-DO:
 
 **Mutant Bob** did the "hard code" of this script for [Blender Stack Exchange](blender.stackexchange.com/questions/40711/how-to-convert-quaternions-keyframes-to-euler-ones-in-several-actions).
 Thanks him!
+
+Version log:
+0.1 - Initial release
+0.2 - Pratik Solanki (http://www.dragoneex.com/) fixed the installation as an addon.
 
