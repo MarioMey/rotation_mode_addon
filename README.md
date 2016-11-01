@@ -27,6 +27,6 @@ TO-DO:
 Thanks him!
 
 Version log:
-0.1 - Initial release
-0.2 - Pratik Solanki (http://www.dragoneex.com/) fixed the installation as an addon.
+- 0.1 - Initial release
+- 0.2 - Pratik Solanki (http://www.dragoneex.com/) fixed the installation as an addon.
 
