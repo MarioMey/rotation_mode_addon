@@ -1,27 +1,30 @@
 '''
-Quat/Euler Rotation Mode Converter v0.1
+Quat/Euler Rotation Mode Converter v0.2
 
 This script/addon:
-    - Changes (pose) bone rotation mode
-    - Converts keyframes from one rotation mode to another
-    - Creates fcurves/keyframes in target rotation mode
-    - Deletes previous fcurves/keyframes.
-    - Converts multiple bones
-    - Converts multiple Actions
-
+	- Changes (pose) bone rotation mode
+	- Converts keyframes from one rotation mode to another
+	- Creates fcurves/keyframes in target rotation mode
+	- Deletes previous fcurves/keyframes.
+	- Converts multiple bones
+	- Converts multiple Actions
+ 
 TO-DO:
-    - To convert object's rotation mode (alrady done in Mutant Bob script,
+	- To convert object's rotation mode (alrady done in Mutant Bob script,
 		but not done in this one.
-    - To understand "EnumProperty" and write it well.
-    - Code clean
-    - ...
-    
+	- To understand "EnumProperty" and write it well.
+	- Code clean
+	- ...
+	
 GitHub: https://github.com/MarioMey/rotation_mode_addon/
 BlenderArtist thread: http://blenderartists.org/forum/showthread.php?388197-Quat-Euler-Rotation-Mode-Converter
 
 Mutant Bob did the "hard code" of this script. Thanks him!
 blender.stackexchange.com/questions/40711/how-to-convert-quaternions-keyframes-to-euler-ones-in-several-actions
 
+Version log:
+0.1 - Initial release
+0.2 - Pratik Solanki (http://www.dragoneex.com/) fixed the installation as an addon.
 
 '''
 
@@ -40,7 +43,16 @@ bl_info = {
 
 
 import bpy
-
+from bpy.props import (StringProperty,
+					  BoolProperty,
+					  IntProperty,
+					  FloatProperty,
+					  FloatVectorProperty,
+					  EnumProperty,
+					  PointerProperty,
+					  CollectionProperty
+					  )
+ 
 order_list = ['QUATERNION', 'XYZ', 'XZY', 'YXZ', 'YZX', 'ZXY', 'ZYX']
 
 class convert():
@@ -224,7 +236,7 @@ class convert():
 convert = convert()
 
 
-def initSceneProperties(scn):
+def initSceneProperties(PropertyGroup):
  
 	bpy.types.Scene.order_list = bpy.props.EnumProperty(
 	items = [('QUATERNION', 'QUATERNION', 'QUATERNION' ),
@@ -239,10 +251,8 @@ def initSceneProperties(scn):
 	
 	scn['order_list'] = 0
  
-	return
- 
-initSceneProperties(bpy.context.scene)
 
+ 
 
 # GUI (Panel)
 #
@@ -359,6 +369,25 @@ class CONVERT_OT_all_action_every_bones(bpy.types.Operator):
 		convert.all_act_every_bon(obj, order)
 
 
-		return {'FINISHED'}
+def register():
+	bpy.utils.register_module(__name__)
+	bpy.types.Scene.order_list = bpy.props.EnumProperty(
+	items = [('QUATERNION', 'QUATERNION', 'QUATERNION' ),
+	('XYZ', 'XYZ', 'XYZ' ),
+	('XZY', 'XZY', 'XZY' ),
+	('YXZ', 'YXZ', 'YXZ' ),
+	('YZX', 'YZX', 'YZX' ),
+	('ZXY', 'ZXY', 'ZXY' ),
+	('ZYX', 'ZYX', 'ZYX' ) ],
+	name = "Order",
+	description = "The targe rotation mode")
+	#bpy.types.Scene.convertrot = PointerProperty(type=initSceneProperties)
 
-bpy.utils.register_module(__name__)
+
+def unregister():
+	bpy.utils.unregister_module(__name__)
+	del bpy.types.Scene.order_list
+	
+	
+if __name__ == "__main__":
+	register()
