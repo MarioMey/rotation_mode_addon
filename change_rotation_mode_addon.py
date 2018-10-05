@@ -144,22 +144,25 @@ class convert():
 		order_quat = order == 'QUATERNION'
 
 		for fcurve in action.fcurves:
-			if fcurve.group.name == bone.name:
-				
-				# If To-Euler conversion
-				if order != 'QUATERNION':
-					if fcurve.data_path.endswith('rotation_quaternion'):
-						do = True
-						bone_prefix = fcurve.data_path[:-len('rotation_quaternion')]
-						break
-				
-				# If To-Quat conversion
-				else:
-					if fcurve.data_path.endswith('rotation_euler'):
-						do = True
-						bone_prefix = fcurve.data_path[:-len('rotation_euler')]
-						break
-		
+			try:
+				if fcurve.group.name == bone.name:
+					
+					# If To-Euler conversion
+					if order != 'QUATERNION':
+						if fcurve.data_path.endswith('rotation_quaternion'):
+							do = True
+							bone_prefix = fcurve.data_path[:-len('rotation_quaternion')]
+							break
+					
+					# If To-Quat conversion
+					else:
+						if fcurve.data_path.endswith('rotation_euler'):
+							do = True
+							bone_prefix = fcurve.data_path[:-len('rotation_euler')]
+							break
+			except:
+				print('Posiblemente', bone.name, 'no tenga keyframes en', action.name)
+			
 		# If To-Euler conversion
 		if do and order != 'QUATERNION':
 			# Converts the group/bone from Quat to Euler
